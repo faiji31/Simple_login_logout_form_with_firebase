@@ -1,9 +1,13 @@
 import React from "react";
 
 const Register = () => {
+      const handleRegister =(event)=>{
+            event.preventdefault();
+            console.log("form submit",event.target.event.value)
+      }
   return (
     <div>
-      <form>
+      <form onSubmit={handleRegister}>
         <div className="hero bg-base-200 min-h-screen">
           <div className="hero-content flex-col lg:flex-row-reverse">
             <div className="text-center lg:text-left">
