@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../Firebase/firebase.init";
 
 const Register = () => {
+  const [error,setError]=useState('');
   const handleRegister = (event) => {
     event.preventDefault(); // Fixed capitalization
 
@@ -17,6 +18,7 @@ const Register = () => {
       .catch((error) => {
         console.error("Error code:", error.code);
         console.error("Error message:", error.message);
+        setError(error.message)
       });
   };
 
@@ -49,6 +51,9 @@ const Register = () => {
                   </div>
                   <button className="btn btn-neutral mt-4">Register</button>
                 </fieldset>
+                {
+                  error && <p className="text-red-500">{error}</p>
+                }
               </div>
             </div>
           </div>
