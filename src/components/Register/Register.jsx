@@ -1,10 +1,25 @@
 import React from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../Firebase/firebase.init";
 
 const Register = () => {
-      const handleRegister =(event)=>{
-            event.preventdefault();
-            console.log("form submit",event.target.event.value)
-      }
+  const handleRegister = (event) => {
+    event.preventDefault(); // Fixed capitalization
+
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    // Call the function and chain the .then() directly to it
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((result) => {
+        console.log("Success:", result.user);
+      })
+      .catch((error) => {
+        console.error("Error code:", error.code);
+        console.error("Error message:", error.message);
+      });
+  };
+
   return (
     <div>
       <form onSubmit={handleRegister}>
@@ -17,12 +32,17 @@ const Register = () => {
               <div className="card-body">
                 <fieldset className="fieldset">
                   <label className="label">Email</label>
-                  <input type="email" className="input" placeholder="Email" />
+                  {/* Added name="email" */}
+                  <input name="email" type="email" className="input" placeholder="Email" required />
+                  
                   <label className="label">Password</label>
+                  {/* Added name="password" */}
                   <input
+                    name="password"
                     type="password"
                     className="input"
                     placeholder="Password"
+                    required
                   />
                   <div>
                     <a className="link link-hover">Forgot password?</a>
